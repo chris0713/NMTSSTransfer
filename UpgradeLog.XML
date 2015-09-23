@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="NMTSSTransfer">
+</Property><Property Name="Solution File" Value="E:\usr\NMTSSTransfer\NMTSSTransfer.sln">
+</Property><Property Name="User Options File" Value="E:\usr\NMTSSTransfer\NMTSSTransfer.suo">
+</Property><Property Name="Date" Value="2012年7月18日">
+</Property><Property Name="Time" Value="下午 15:17">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="NMTSSTransfer.sln" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer.sln">
+</Event><Event ErrorLevel="0" Project="" Source="NMTSSTransfer.suo" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer.suo">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\NMTSSTransfer.csproj" Description="Project file successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\NMTSSTransfer.csproj">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\CalTransfer.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\CalTransfer.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Form1.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Form1.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Form1.Designer.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Form1.Designer.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Program.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Program.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Properties\AssemblyInfo.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Properties\Resources.Designer.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Properties\Settings.Designer.cs" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Properties\Settings.settings" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Form1.resx" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Form1.resx">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\Properties\Resources.resx" Description="File successfully backed up as E:\usr\NMTSSTransfer\Backup\NMTSSTransfer\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\NMTSSTransfer.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="NMTSSTransfer" Source="NMTSSTransfer\NMTSSTransfer.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="NMTSSTransfer.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="NMTSSTransfer.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="NMTSSTransfer" Source="NMTSSTransfer\NMTSSTransfer.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

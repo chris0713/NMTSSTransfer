@@ -1,0 +1,460 @@
+﻿namespace NMTSSTransfer
+{
+    partial class Form2
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            this.Go = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtHName = new System.Windows.Forms.TextBox();
+            this.txtHID4 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbTarget = new System.Windows.Forms.ComboBox();
+            this.txtHDisNum = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnSendMail = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtDisNum = new System.Windows.Forms.TextBox();
+            this.labl03 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtID4 = new System.Windows.Forms.TextBox();
+            this.labl01 = new System.Windows.Forms.Label();
+            this.labl02 = new System.Windows.Forms.Label();
+            this.btnLoadFile = new System.Windows.Forms.Button();
+            this.btnDelGrid = new System.Windows.Forms.Button();
+            this.gvMain = new System.Windows.Forms.DataGridView();
+            this.btnAddGrid = new System.Windows.Forms.Button();
+            this.txtOTime = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblRemaining = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.txtContent2 = new System.Windows.Forms.TextBox();
+            this.group3 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvMain)).BeginInit();
+            this.group3.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // Go
+            // 
+            this.Go.Location = new System.Drawing.Point(402, 403);
+            this.Go.Name = "Go";
+            this.Go.Size = new System.Drawing.Size(91, 34);
+            this.Go.TabIndex = 2;
+            this.Go.Text = "預約登記";
+            this.Go.UseVisualStyleBackColor = true;
+            this.Go.Click += new System.EventHandler(this.Go_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.Location = new System.Drawing.Point(219, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(133, 12);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "※購票者姓名之HTML碼";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label5.Location = new System.Drawing.Point(219, 45);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(145, 12);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "※身分證字號末四碼HTML";
+            // 
+            // txtHName
+            // 
+            this.txtHName.Location = new System.Drawing.Point(365, 13);
+            this.txtHName.Name = "txtHName";
+            this.txtHName.Size = new System.Drawing.Size(100, 22);
+            this.txtHName.TabIndex = 2;
+            this.txtHName.Text = "username";
+            // 
+            // txtHID4
+            // 
+            this.txtHID4.Location = new System.Drawing.Point(366, 41);
+            this.txtHID4.Name = "txtHID4";
+            this.txtHID4.Size = new System.Drawing.Size(99, 22);
+            this.txtHID4.TabIndex = 5;
+            this.txtHID4.Text = "tb_extra_0";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.cbTarget);
+            this.groupBox1.Controls.Add(this.txtHDisNum);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.txtHID4);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtHName);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Location = new System.Drawing.Point(2, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(491, 77);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "系統設定";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.Location = new System.Drawing.Point(4, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "※訂票場地";
+            // 
+            // cbTarget
+            // 
+            this.cbTarget.FormattingEnabled = true;
+            this.cbTarget.Location = new System.Drawing.Point(83, 15);
+            this.cbTarget.Name = "cbTarget";
+            this.cbTarget.Size = new System.Drawing.Size(121, 20);
+            this.cbTarget.TabIndex = 11;
+            // 
+            // txtHDisNum
+            // 
+            this.txtHDisNum.Location = new System.Drawing.Point(105, 40);
+            this.txtHDisNum.Name = "txtHDisNum";
+            this.txtHDisNum.Size = new System.Drawing.Size(100, 22);
+            this.txtHDisNum.TabIndex = 8;
+            this.txtHDisNum.Text = "mobile";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label10.Location = new System.Drawing.Point(4, 45);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(95, 12);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "※經銷商號末6碼";
+            // 
+            // btnSendMail
+            // 
+            this.btnSendMail.Location = new System.Drawing.Point(474, 29);
+            this.btnSendMail.Name = "btnSendMail";
+            this.btnSendMail.Size = new System.Drawing.Size(98, 28);
+            this.btnSendMail.TabIndex = 22;
+            this.btnSendMail.Text = "寄出Mail";
+            this.btnSendMail.UseVisualStyleBackColor = true;
+            this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtEmail);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.txtDisNum);
+            this.groupBox2.Controls.Add(this.labl03);
+            this.groupBox2.Controls.Add(this.txtName);
+            this.groupBox2.Controls.Add(this.txtID4);
+            this.groupBox2.Controls.Add(this.labl01);
+            this.groupBox2.Controls.Add(this.labl02);
+            this.groupBox2.Location = new System.Drawing.Point(2, 81);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(491, 80);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "資料輸入區";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(230, 42);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(157, 22);
+            this.txtEmail.TabIndex = 23;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label4.Location = new System.Drawing.Point(192, 47);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(36, 12);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "EMail ";
+            // 
+            // txtDisNum
+            // 
+            this.txtDisNum.Location = new System.Drawing.Point(96, 45);
+            this.txtDisNum.Name = "txtDisNum";
+            this.txtDisNum.Size = new System.Drawing.Size(83, 22);
+            this.txtDisNum.TabIndex = 15;
+            this.txtDisNum.Text = "808088306";
+            // 
+            // labl03
+            // 
+            this.labl03.AutoSize = true;
+            this.labl03.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labl03.Location = new System.Drawing.Point(6, 50);
+            this.labl03.Name = "labl03";
+            this.labl03.Size = new System.Drawing.Size(83, 12);
+            this.labl03.TabIndex = 14;
+            this.labl03.Text = "經銷商號末6碼";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(96, 17);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(83, 22);
+            this.txtName.TabIndex = 7;
+            this.txtName.Text = "陳東志";
+            // 
+            // txtID4
+            // 
+            this.txtID4.Location = new System.Drawing.Point(304, 17);
+            this.txtID4.Name = "txtID4";
+            this.txtID4.Size = new System.Drawing.Size(83, 22);
+            this.txtID4.TabIndex = 12;
+            this.txtID4.Text = "1746";
+            // 
+            // labl01
+            // 
+            this.labl01.AutoSize = true;
+            this.labl01.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labl01.Location = new System.Drawing.Point(9, 22);
+            this.labl01.Name = "labl01";
+            this.labl01.Size = new System.Drawing.Size(65, 12);
+            this.labl01.TabIndex = 7;
+            this.labl01.Text = "購票者姓名";
+            // 
+            // labl02
+            // 
+            this.labl02.AutoSize = true;
+            this.labl02.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labl02.Location = new System.Drawing.Point(195, 22);
+            this.labl02.Name = "labl02";
+            this.labl02.Size = new System.Drawing.Size(101, 12);
+            this.labl02.TabIndex = 13;
+            this.labl02.Text = "身分證字號末四碼";
+            // 
+            // btnLoadFile
+            // 
+            this.btnLoadFile.Location = new System.Drawing.Point(499, 53);
+            this.btnLoadFile.Name = "btnLoadFile";
+            this.btnLoadFile.Size = new System.Drawing.Size(98, 28);
+            this.btnLoadFile.TabIndex = 22;
+            this.btnLoadFile.Text = "匯入清單";
+            this.btnLoadFile.UseVisualStyleBackColor = true;
+            this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
+            // 
+            // btnDelGrid
+            // 
+            this.btnDelGrid.Location = new System.Drawing.Point(499, 89);
+            this.btnDelGrid.Name = "btnDelGrid";
+            this.btnDelGrid.Size = new System.Drawing.Size(98, 28);
+            this.btnDelGrid.TabIndex = 9;
+            this.btnDelGrid.Text = "移出清單";
+            this.btnDelGrid.UseVisualStyleBackColor = true;
+            this.btnDelGrid.Click += new System.EventHandler(this.btnDelGrid_Click);
+            // 
+            // gvMain
+            // 
+            this.gvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvMain.Location = new System.Drawing.Point(2, 165);
+            this.gvMain.Name = "gvMain";
+            this.gvMain.RowTemplate.Height = 24;
+            this.gvMain.Size = new System.Drawing.Size(595, 232);
+            this.gvMain.TabIndex = 9;
+            // 
+            // btnAddGrid
+            // 
+            this.btnAddGrid.Location = new System.Drawing.Point(499, 128);
+            this.btnAddGrid.Name = "btnAddGrid";
+            this.btnAddGrid.Size = new System.Drawing.Size(98, 27);
+            this.btnAddGrid.TabIndex = 16;
+            this.btnAddGrid.Text = "加入清單";
+            this.btnAddGrid.UseVisualStyleBackColor = true;
+            this.btnAddGrid.Click += new System.EventHandler(this.btnAddGrid_Click);
+            // 
+            // txtOTime
+            // 
+            this.txtOTime.Location = new System.Drawing.Point(6, 418);
+            this.txtOTime.Name = "txtOTime";
+            this.txtOTime.Size = new System.Drawing.Size(142, 22);
+            this.txtOTime.TabIndex = 17;
+            this.txtOTime.TextChanged += new System.EventHandler(this.txtOTime_TextChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label12.Location = new System.Drawing.Point(0, 403);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(207, 12);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "※開始訂票時間(例：2012-10-02 17:23)";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(506, 403);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(91, 34);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "立即進行登記";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(298, 403);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(91, 34);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "取消預約";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(156, 423);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 12);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "剩餘時間(分)：";
+            // 
+            // lblRemaining
+            // 
+            this.lblRemaining.AutoSize = true;
+            this.lblRemaining.Font = new System.Drawing.Font("新細明體", 14F, System.Drawing.FontStyle.Bold);
+            this.lblRemaining.ForeColor = System.Drawing.Color.Blue;
+            this.lblRemaining.Location = new System.Drawing.Point(241, 416);
+            this.lblRemaining.MaximumSize = new System.Drawing.Size(100, 20);
+            this.lblRemaining.MinimumSize = new System.Drawing.Size(50, 20);
+            this.lblRemaining.Name = "lblRemaining";
+            this.lblRemaining.Size = new System.Drawing.Size(50, 20);
+            this.lblRemaining.TabIndex = 21;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // txtContent2
+            // 
+            this.txtContent2.Location = new System.Drawing.Point(11, 18);
+            this.txtContent2.Multiline = true;
+            this.txtContent2.Name = "txtContent2";
+            this.txtContent2.Size = new System.Drawing.Size(457, 53);
+            this.txtContent2.TabIndex = 22;
+            // 
+            // group3
+            // 
+            this.group3.Controls.Add(this.btnSendMail);
+            this.group3.Controls.Add(this.txtContent2);
+            this.group3.Location = new System.Drawing.Point(8, 449);
+            this.group3.Name = "group3";
+            this.group3.Size = new System.Drawing.Size(589, 76);
+            this.group3.TabIndex = 23;
+            this.group3.TabStop = false;
+            this.group3.Text = "通知信寄件區";
+            // 
+            // Form2
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(609, 535);
+            this.Controls.Add(this.group3);
+            this.Controls.Add(this.lblRemaining);
+            this.Controls.Add(this.btnLoadFile);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnAddGrid);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.txtOTime);
+            this.Controls.Add(this.gvMain);
+            this.Controls.Add(this.btnDelGrid);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.Go);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Form2";
+            this.Text = "BeClass 訂票自動化";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvMain)).EndInit();
+            this.group3.ResumeLayout(false);
+            this.group3.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button Go;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtHName;
+        private System.Windows.Forms.TextBox txtHID4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Button btnDelGrid;
+        private System.Windows.Forms.TextBox txtID4;
+        private System.Windows.Forms.Label labl01;
+        private System.Windows.Forms.Label labl02;
+        private System.Windows.Forms.DataGridView gvMain;
+        private System.Windows.Forms.TextBox txtHDisNum;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtDisNum;
+        private System.Windows.Forms.Label labl03;
+        private System.Windows.Forms.Button btnAddGrid;
+        private System.Windows.Forms.TextBox txtOTime;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cbTarget;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblRemaining;
+        private System.Windows.Forms.Button btnLoadFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnSendMail;
+        private System.Windows.Forms.TextBox txtContent2;
+        private System.Windows.Forms.GroupBox group3;
+    }
+}

@@ -1,0 +1,337 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.IO;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using log4net;
+using log4net.Config;
+
+
+namespace NMTSSTransfer
+{
+    public partial class Form1 : Form
+    {
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(Form1));
+        CalTransfer ct = new CalTransfer();
+        private int numberToCompute = 0;
+        private int _max = 100;
+        private int highestPercentageReached = 0;
+        List<string> l_Items;
+        
+       
+
+
+        public Form1()
+        {
+            
+            InitializeComponent();
+            InitialBackgroundWorker();
+            setDefaultValues();
+            log4net.Config.XmlConfigurator.Configure();
+
+        }
+        private void InitialBackgroundWorker()
+        {
+            backgroundWorker1.DoWork +=new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.RunWorkerCompleted+=new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
+            backgroundWorker1.ProgressChanged+=new ProgressChangedEventHandler(backgroundWorker1_Progresschanged);
+        }
+
+        private void backgroundWorker1_DoWork(object sender,
+            DoWorkEventArgs e)
+        {
+            numberToCompute = 0;
+            backgroundWorker1.WorkerReportsProgress = true;
+            BackgroundWorker worker = sender as BackgroundWorker;
+            DoAdd(worker, e);
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+                log.Error(e.Error.Message);
+            else if (e.Cancelled)
+            {
+                toolStripStatusLabel1.Text = "Canceled";
+                btnGo.Enabled = true;
+            }
+            else
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new Action(() => toolStripStatusLabel1.Text = "作業已完成!!"));
+                    BeginInvoke(new Action(() => toolStripStatusLabel1.ForeColor = Color.DarkBlue));
+                }
+                else
+                {
+                    toolStripStatusLabel1.Text = "作業已完成！";
+                    toolStripStatusLabel1.ForeColor = Color.DarkBlue;
+                }
+
+            }
+        }
+
+        private void backgroundWorker1_Progresschanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.toolStripProgressBar1.Value = e.ProgressPercentage;
+        }
+
+        private void  DoAdd(BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() => toolStripProgressBar1.Maximum = _max));
+            }
+            
+            int iComplete = (int)e.Argument;
+            while (iComplete < _max)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                worker.ReportProgress(iComplete);
+                iComplete = numberToCompute;
+                System.Threading.Thread.Sleep(10);
+            }
+            if (iComplete >= _max)
+                worker.ReportProgress(_max);
+
+        }
+
+        private void setDefaultValues()
+        {
+            try{
+                this.toolStripStatusLabel1.ForeColor = Color.DarkBlue;
+                toolStripStatusLabel1.Text = "";
+                this.regionCode.SelectedIndex = 0;
+                //Year
+                DateTime dt = DateTime.Now;
+                DateTime dt2 = dt.AddMonths(1);
+                
+                for (int i = 0; i < fYear.Items.Count;  i++)
+                {
+                    int year = Convert.ToInt32(fYear.Items[i].ToString());
+                    if (dt.Year == year )
+                        fYear.SelectedIndex = i;
+                    
+                    if(dt2.Year == year)
+                        tYear.SelectedIndex = i;
+                    
+                }
+
+                //Start Month
+                for (int i = 0; i < fMonth.Items.Count; i++)
+                {
+                    int m = Convert.ToInt32(fMonth.Items[i].ToString());
+                    if (dt.Month == m)
+                        fMonth.SelectedIndex = i;
+                }
+                //End Month
+                for (int i = 0; i < tMonth.Items.Count; i++)
+                {
+                    int m = Convert.ToInt32(tMonth.Items[i].ToString());
+                    if (dt2.Month == m)
+                        tMonth.SelectedIndex = i;
+                }
+
+                //Start Day
+                for (int i = 0; i < fDay.Items.Count; i++)
+                {
+                    int d = Convert.ToInt32(fDay.Items[i].ToString());
+                    if (dt.Day == d)
+                        fDay.SelectedIndex = i;
+                }
+                //End Day
+                for (int i = 0; i < tDay.Items.Count; i++)
+                {
+                    int d = Convert.ToInt32(tDay.Items[i].ToString());
+                    if (dt2.Day == d)
+                        tDay.SelectedIndex = i;
+                }
+
+                //載入ID/PWD 做為Default 值
+                string strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                using (StreamReader sr = new StreamReader(strPath+"IDInfo.txt"))
+                {
+                    try
+                    {
+                        string l = sr.ReadLine();
+                        string[] aryAccountInfo = l.Split(',');
+                        this.txtUID.Text = aryAccountInfo[0];
+                        this.txtPwd.Text = aryAccountInfo[1];
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error("Error at Load ID/PWD Default :" + ex.Message);
+                    }
+                }
+
+
+            }catch(Exception ex)
+            {
+                log.Error("Error at setDefaultValues():" + ex.Message);
+            }
+
+        }
+
+ 
+        private bool checkInputData()
+        {
+            if ("".Equals(this.txtUID.Text) || "".Equals(this.txtPwd.Text))
+                return false;
+            else
+                return true;
+
+        }
+
+        private void composeCheckItems()
+        {
+            l_Items = new List<string>();
+            l_Items.Add("hdnSelMtgState=TW");
+            l_Items.Add("selLangCode=2");
+            if (dr.Checked)
+                l_Items.Add("selMtgType=" + dr.Name.ToUpper());
+            if(ls.Checked)
+                l_Items.Add("selMtgType=" + ls.Name.ToUpper());
+            if(sl.Checked)
+                l_Items.Add("selMtgType=" + sl.Name.ToUpper());
+            if(B5.Checked)
+                l_Items.Add("selMtgType=" + B5.Name.ToUpper());
+            if(ECCT.Checked)
+                l_Items.Add("selMtgType=" + ECCT.Name.ToUpper());
+            if(GPT.Checked)
+                l_Items.Add("selMtgType=" + GPT.Name.ToUpper());
+            if(nd.Checked)
+                l_Items.Add("selMtgType=" + nd.Name.ToUpper());
+            if(to.Checked)
+                l_Items.Add("selMtgType=" + to.Name.ToUpper());
+            if(tsm.Checked)
+                l_Items.Add("selMtgType=" + tsm.Name.ToUpper());
+            if(tls1.Checked)
+                l_Items.Add("selMtgType=" + tls1.Name.ToUpper());
+            if(tls2.Checked)
+                l_Items.Add("selMtgType=" + tls2.Name.ToUpper());
+            if(D1.Checked)
+                l_Items.Add("selMtgType=" + D1.Name.ToUpper());
+            if(D2.Checked)
+                l_Items.Add("selMtgType=" + D2.Name.ToUpper());
+            if(GTL.Checked)
+                l_Items.Add("selMtgType=" + GTL.Name.ToUpper());
+            if(AAE.Checked)
+                l_Items.Add("selMtgType=" + AAE.Name.ToUpper());
+            if(WCT.Checked)
+                l_Items.Add("selMtgType=" + WCT.Name.ToUpper());
+            l_Items.Add("fYear="+fYear.Text +"&fMonth="+fMonth.Text +"&fDay="+fDay.Text);
+            l_Items.Add("tYear=" + tYear.Text + "&tMonth=" + tMonth.Text + "&tDay=" + tDay.Text);
+            l_Items.Add("regionCode="+ regionCode.Text);
+        }
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            if (checkInputData() == true)
+            {
+                this.toolStripStatusLabel1.ForeColor = Color.DarkBlue;
+                this.toolStripStatusLabel1.Text = "";
+                composeCheckItems();
+                this.startGen();
+
+                //Thread th = new Thread(new ThreadStart(startGen));
+                //th.Start();
+                
+                //Start the asynchronous operation.
+                //backgroundWorker1.RunWorkerAsync(numberToCompute);
+                log.Info("完成資料下載作業");
+                
+            }
+            else
+            {
+                MessageBox.Show("Please input your ID and Password");
+            }
+        }
+        public string getCalendarFromNMTSS(string uid , string pwd)
+        {
+            return "";
+        }
+        private string OutputMsg(JobResult j)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (j.ERRORURL.Count > 0)
+            {
+                sb.Append("\r\n").Append("無法下載內容的URL如下：").Append("\r\n");
+                foreach (string s in j.ERRORURL)
+                {
+                    sb.Append(s).Append(";").Append("\r\n");
+                }
+                sb.Append("----------------------------------------------------------------");
+            }
+            if (j.ErrMsg.Count > 0)
+            {
+                sb.Append("\r\n").Append("執行過程發生之錯誤訊息清單如下：").Append("\r\n");
+                foreach (string s2 in j.ErrMsg)
+                {
+                    sb.Append(s2).Append(";").Append("\r\n");
+                }
+            }
+            return sb.ToString();
+        }
+        private bool startGen()
+        {
+            this.toolStripStatusLabel1.Text = @"已開始執行資料查詢及下載作業，請稍候...";
+            log.Info("已開始執行資料查詢及下載作業，請稍候...");
+            this.btnGo.Enabled = false;
+
+            JobResult r = ct.getCVS(this.txtSaveLoc.Text, this.txtUID.Text, this.txtPwd.Text, this.l_Items, ref numberToCompute, ref _max, ref backgroundWorker1);
+            bool isOK = r.IsDownloadSuccess;
+            if (isOK == false)
+            {
+                this.toolStripStatusLabel1.ForeColor = Color.Red;
+                this.toolStripStatusLabel1.Text = @"過程中產生異常，請查看Log目錄下的log檔.";
+                log.Error(OutputMsg(r));
+            }
+            else
+            {
+                this.toolStripStatusLabel1.ForeColor = Color.DarkBlue;
+                this.toolStripStatusLabel1.Text = @"作業已完成!!";
+            }
+            this.btnGo.Enabled = true;
+            return isOK;
+            
+          
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (this.backgroundWorker1.IsBusy)
+            {
+                try
+                {
+                    backgroundWorker1.WorkerSupportsCancellation = true;
+                    if(backgroundWorker1.WorkerSupportsCancellation == true)
+                        backgroundWorker1.CancelAsync();
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message);
+                }
+
+            }
+            
+        }
+
+        private void menuForm2_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.Visible = true;
+        }
+        
+    }
+}
