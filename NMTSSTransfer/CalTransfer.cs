@@ -10,6 +10,8 @@ using log4net;
 using log4net.Config;
 using System.IO;
 using System.Windows.Forms;
+using HtmlAgilityPack;
+
 
 namespace NMTSSTransfer
 {
@@ -18,23 +20,23 @@ namespace NMTSSTransfer
         private static readonly ILog log = LogManager.GetLogger(typeof(CalTransfer));
         HttpWebRequest Request;
         CookieContainer m_Cookies = new CookieContainer();
-        
+        HtmlAgilityPack.HtmlDocument m_EvtDoc = new HtmlAgilityPack.HtmlDocument();
 
-       /**
-        *  loc : Save Location
-         * url : login URL
-         * uid : User ID
-         * pwd : User Pwd
-         */
+
+        /**
+         *  loc : Save Location
+          * url : login URL
+          * uid : User ID
+          * pwd : User Pwd
+          */
 
 
         public JobResult getCVS(string loc , string uid, string pwd , List<string> items , ref int n , ref int max , ref System.ComponentModel.BackgroundWorker worker)
         {
 
             //string searchPage = @"http://www.unfranchise.com.tw/index.cfm?action=meetings.nmSvSe&mtgSrchType=b";
-            string searchPage = @"https://www.unfranchise.com.tw/index.cfm?action=meetings.nmMtgSrchResults&mtgSrchType=b";
+            string searchPage = @"https://tw.unfranchise.com/index.cfm?action=meetings.unfMeetingSearchResults";
 
-                                  
             JobResult results = new JobResult();
             // Login into Unfranchise System.
             bool LoginSuccess = false;
@@ -54,6 +56,26 @@ namespace NMTSSTransfer
                 results.IsDownloadSuccess = false;
                 results.ErrMsg.Add("登入失敗，無法執行下載作業");
                 return results;
+            }
+
+            try
+            {
+                //Get all Hidden input tag in Search Page 
+                string searchMainPage = @"https://tw.unfranchise.com/index.cfm?action=meetings.unfMeetingSearch";
+                string strSPageCnt = HTTPTool.DownloadContentsUTF8(Request.CookieContainer, searchMainPage, string.Empty, 2);
+                HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+                htmlDoc.LoadHtml(strSPageCnt);
+                var inputs = htmlDoc.DocumentNode.Descendants("input");
+                foreach (var input in inputs)
+                {
+                     if ((input.Attributes["type"].Value == "hidden") && (input.Attributes["name"] != null))
+                         items.Add(input.Attributes["name"].Value + "=" + input.Attributes["value"].Value);
+                }
+            }
+            catch (Exception ex9)
+            {
+                log.Fatal("Error at getCVS()-Step0- (Get All Hide Input Tag):" + ex9.Message);
+                throw new Exception("Error at getCVS()-Step0(Get All Hide Input Tag):" + ex9.Message);
             }
 
             //Compose Post Data
@@ -102,6 +124,9 @@ namespace NMTSSTransfer
                 //}
                 #endregion
                 DateTime t1 = DateTime.Now;
+
+                
+
                 string SearchResults = HTTPTool.DownloadContentsUTF8(Request.CookieContainer, searchPage, strPostData, 1);
                 DateTime t2 = DateTime.Now;
                 double dd = new TimeSpan(t2.Ticks - t1.Ticks).TotalSeconds;
@@ -109,17 +134,26 @@ namespace NMTSSTransfer
 
                 List<string> MeetingLinks = new List<string>();
                 //確認是否被導到登入頁
-                if (SearchResults.IndexOf("NMTSS 會議搜尋結果") < 0)
+                if (SearchResults.IndexOf("顯示活動的") < 0)
                     log.Error("無法取得查詢結果-_-|||");
                 else
                     results.IsDownloadSuccess = true;
 
-                string[] aryValue = GetAttribute(SearchResults, "a", "href");
-                for (int k = 0; k < aryValue.Length; k++)
+                //string[] aryValue = GetAttribute(SearchResults, "a", "href");
+                //for (int k = 0; k < aryValue.Length; k++)
+                //{
+                //    //只取出我要的Meeting Links
+                //    if (aryValue[k].IndexOf("index.cfm?action=meetings.nmMtgDtl&ID=") >= 0)
+                //        MeetingLinks.Add(aryValue[k].Trim());
+                //}
+                HtmlAgilityPack.HtmlDocument resultDoc = new HtmlAgilityPack.HtmlDocument();
+                resultDoc.LoadHtml(SearchResults);
+                var links = resultDoc.DocumentNode.Descendants("a");
+                foreach (var link in links)
                 {
-                    //只取出我要的Meeting Links
-                    if (aryValue[k].IndexOf("index.cfm?action=meetings.nmMtgDtl&ID=") >= 0)
-                        MeetingLinks.Add(aryValue[k].Trim());
+                    if ((link.Attributes["class"]!= null) && (link.Attributes["href"] != null))
+                       if(link.Attributes["class"].Value == "event")
+                         MeetingLinks.Add(link.Attributes["href"].Value);
                 }
                 max = MeetingLinks.Count;
                 worker.RunWorkerAsync(0); 
@@ -128,11 +162,11 @@ namespace NMTSSTransfer
                 for (int j = 0; j < MeetingLinks.Count; j++)
                 {
                     n = j;
-                    string url = @"http://www.unfranchise.com.tw/" + MeetingLinks[j];
+                    string url = @"https://tw.unfranchise.com/" + MeetingLinks[j];
                     string SingleInfo = HTTPTool.DownloadContentsUTF8(m_Cookies , url, "", 2);
-                    string strMeetingInfo = getMeetingInfo(SingleInfo);
+                    string strMeetingInfo = getMeetingInfo2(SingleInfo);
                     if (strMeetingInfo != string.Empty)
-                        meetings.AppendLine(getMeetingInfo(SingleInfo));
+                        meetings.AppendLine(getMeetingInfo2(SingleInfo));
                     else
                     {
                         results.ERRORURL.Add(url);
@@ -150,7 +184,7 @@ namespace NMTSSTransfer
             }
 
             //Compose to csvFile
-            string header = @"""主旨"",""開始日期"",""開始時間"",""結束日期"",""結束時間"",""全天"",""提醒開啟/關閉"",""提醒日期"",""提醒時間"",""會議召集人"",""出席者"",""列席者"",""會議資源"",""地點"",""忙閒狀態"",""私人"",""津貼"",""帳目資訊"",""敏感度"",""描述"",""優先順序"",""類別"" ";
+            string header = @"""主旨"",""開始日期"",""開始時間"",""結束日期"",""結束時間"",""全天"",""提醒開啟/關閉"",""提醒日期"",""提醒時間"",""會議召集人"",""出席者"",""列席者"",""會議資源"",""地點"",""忙閒狀態"",""私人"",""津貼"",""帳目資訊"",""敏感度"",""描述"",""優先順序"",""類別""";
             try
             {
                 //清除不必要的字詞
@@ -199,9 +233,10 @@ namespace NMTSSTransfer
             try
             {
                 //Login Unfranchise.com.tw
-                string strPostData = @"usrID=" + uid + @"&usrPwd=" + pwd;
+                //string strPostData = @"usrID=" + uid + @"&usrPwd=" + pwd;
+                string strPostData = @"username=" + uid + @"&password=" + pwd;
                 byte[] data = new ASCIIEncoding().GetBytes(strPostData);
-                Request = (HttpWebRequest)WebRequest.Create(@"https://www.unfranchise.com.tw/index.cfm?action=main.authUUser");
+                Request = (HttpWebRequest)WebRequest.Create(@"https://tw.unfranchise.com/index.cfm?action=main.unfLogin-process");
                 Request.Method = "POST";
                 Request.ContentType = "application/x-www-form-urlencoded";
                 Request.ContentLength = data.Length;
@@ -215,7 +250,8 @@ namespace NMTSSTransfer
                 newStream.Close();
                 //Get Response 
                 HttpWebResponse Response = (HttpWebResponse)Request.GetResponse();
-                log.Debug("ResponseURI : " + Response.ResponseUri);
+
+
                 //判斷是否是在首頁：
 
                 //StreamReader sr = new StreamReader(Response.GetResponseStream(), Encoding.UTF8);
@@ -236,6 +272,8 @@ namespace NMTSSTransfer
                 //else
                 //    IsLoginSuccess = true;
 
+                StreamReader sr = new StreamReader(Response.GetResponseStream(), Encoding.UTF8);
+                String rt_Login = sr.ReadToEnd();
 
                 string[] AryMainPageConfirmWords = ConfigurationManager.AppSettings["MainPageConfirm"].ToString().Split(',');
                 foreach (string keyWord in AryMainPageConfirmWords)
@@ -243,7 +281,7 @@ namespace NMTSSTransfer
                     if (Response.ResponseUri.ToString().IndexOf(keyWord) > 0)
                         IsLoginSuccess = true;
                 }
-                if(IsLoginSuccess == false)
+                if (IsLoginSuccess == false)
                     throw new Exception("Can not find Response URI with 'action=news.naMain', It may be redirect to a Offical Error Page.");
 
 
@@ -327,6 +365,7 @@ namespace NMTSSTransfer
         }
         */
         #endregion
+        /** 舊寫法不用
         private string getMeetingInfo(string htmlCode)
         {
             nmtssVO vo = new nmtssVO();
@@ -339,9 +378,6 @@ namespace NMTSSTransfer
             //string strAddress = string.Empty;//會場地址
             //string strComments = string.Empty;//意見
             //string strSubject = string.Empty;//主旨
-
-            
-            
 
             // Date 
             vo.MeetingDate = getWords(ref htmlCode, @"日期：</td>");
@@ -394,6 +430,46 @@ namespace NMTSSTransfer
             return composeCanlenderText(vo);
                        
         }
+*/
+
+        //2015-09-29 Modified.
+        private string getMeetingInfo2(string htmlCode)
+        {
+            nmtssVO vo = new nmtssVO();
+            m_EvtDoc.LoadHtml(htmlCode);
+            var node= m_EvtDoc.DocumentNode.SelectSingleNode("//div[@class=\"column\"]");
+            //主辦者
+            vo.Host = node.SelectSingleNode("./div[contains(label,'主辦者')]/text()").InnerText.Replace(System.Environment.NewLine,string.Empty);
+            //電子郵件:
+             vo.EMail = node.SelectSingleNode("./div[contains(label,'電子郵件')]/text()").InnerText.Trim().Replace(System.Environment.NewLine, string.Empty); ;
+            //主持人(可能會帶入演講人姓名)
+            vo.STACKHOLDER = node.SelectSingleNode("./div[contains(label,'主持人姓名')]/text()").InnerText.Replace(System.Environment.NewLine, string.Empty);
+            //主持人電話:
+            vo.Tel = node.SelectSingleNode("./div[contains(label,'主持人電話')]/text()").InnerText.Trim().Replace(System.Environment.NewLine, string.Empty); ;
+            //演講嘉賓:
+            vo.Speaker = node.SelectSingleNode("./div[contains(label,'演講嘉賓')]/text()").InnerText.Trim().Replace(System.Environment.NewLine, string.Empty); ;
+            //若沒填演講嘉賓，改查"主講人"
+            if (vo.Speaker == string.Empty)
+                vo.Speaker = node.SelectSingleNode("//p/label[contains(.,'主講人')]/following-sibling::div[1]").InnerText.Trim();
+            //其他意見:
+            vo.Notes = node.SelectSingleNode("//div/label[contains(.,'其他意見')]/following-sibling::div[1]").InnerText.Trim();
+            //日期
+            vo.MeetingDate = node.SelectSingleNode("//div[@class=\"eventDate\"]/text()").InnerText.Trim();
+            //Get Time Period ~
+            string strTimePeriod = node.SelectSingleNode("//div[@class=\"eventDate\"]/following-sibling::div[1]/text()").InnerText.Trim();
+            vo.StartTime = strTimePeriod.Split('-')[0].Trim();
+            vo.EndTime = strTimePeriod.Split('-')[1].Trim();
+
+            //會場地址
+            vo.Locate1 = node.SelectSingleNode("//div[@class=\"eventDate\"]/following-sibling::div[3]/text()").InnerText.Trim()
+                  + " " + node.SelectSingleNode("//div[@class=\"eventDate\"]/following-sibling::div[2]/text()").InnerText.Trim();
+            vo.Locate2 = getReginNameInString(node.SelectSingleNode("//div[@class=\"eventDate\"]/following-sibling::div[3]/text()").InnerText.Trim());
+            //會議主旨
+            vo.MeetingName = node.SelectSingleNode("//h3/span[@class='meetingID']/following-sibling::text()").InnerText.Trim();
+            
+            return composeCanlenderText(vo);
+
+        }
 
         private static string changeFormate(string dt)
         {
@@ -407,11 +483,19 @@ namespace NMTSSTransfer
 
         private string composeCanlenderText(nmtssVO vo)
         {
-            
-            //string contents = @""主旨,"2009/5/14","上午 09:00:00","2009/5/14","上午 09:30:00","假","假","2009/5/14","上午 08:45:00",,,,,"地點","2","假",,,"普通","comments","普通"
 
+            //string contents = @""主旨,"2009/5/14","上午 09:00:00","2009/5/14","上午 09:30:00","假","假","2009/5/14","上午 08:45:00",,,,,"地點","2","假",,,"普通","comments","普通"
+            //地方研討會，有人不填演講人姓名。在此進行判斷
+            if (vo.Speaker.Equals(string.Empty))
+            {
+                string strPatten = string.Empty;
+                if (vo.STACKHOLDER.LastIndexOf(":") > 0) strPatten = ":";
+                if (vo.STACKHOLDER.LastIndexOf("：") > 0) strPatten = "：";
+                if(strPatten != string.Empty)
+                    vo.Speaker = vo.STACKHOLDER.Substring(vo.STACKHOLDER.LastIndexOf(strPatten)+1,3);
+            }
             StringBuilder sb = new StringBuilder();
-            sb.Append("\"").Append("[").Append(vo.Locate2.Substring(0,3)).Append("]").Append(converter(vo.MeetingName)).Append("-").Append(vo.Speaker).Append("\",")
+            sb.Append("\"").Append("[").Append(vo.Locate2).Append("]").Append(converter(vo.MeetingName)).Append("-").Append(vo.Speaker).Append("\",")
               .Append("\"").Append(vo.MeetingDate).Append("\",")
               .Append("\"").Append(vo.StartTime).Append("\",")
               .Append("\"").Append(vo.MeetingDate).Append("\",")
@@ -419,8 +503,8 @@ namespace NMTSSTransfer
               .Append("\"假\",\"假\"").Append(",")
               .Append("\"").Append(vo.MeetingDate).Append("\",")
               .Append("\"").Append(vo.StartTime).Append("\"").Append(@",,,,,")
-              .Append("\"").Append(vo.Locate2).Append("\"").Append(",\"2\",\"假\",,,\"普通\",")
-              .Append("\"").Append(@"主持人:").AppendLine(vo.Host).Append("演講人:").AppendLine(vo.Speaker).Append(@"(").Append(vo.Tel).Append(")")
+              .Append("\"").Append(vo.Locate1).Append("\"").Append(",\"2\",\"假\",,,\"普通\",")
+              .Append("\"").Append(@"主辦人:").AppendLine(vo.Host).Append("演講人:").AppendLine(vo.Speaker).Append(@"(").Append("主持人:").Append(vo.STACKHOLDER).Append("-").Append(vo.Tel).Append(")")
               .AppendLine("").Append(vo.Notes).Append("\"").Append(",\"普通\"");
 
             return sb.ToString();
@@ -434,13 +518,13 @@ namespace NMTSSTransfer
             {
                 switch (orginal)
                 {
-                    case "Second Look":
+                    case "超連鎖事業說明會":
                             strValue = "UBP";
                         break;
-                    case "Basic Five":
+                    case "成功五要訣":
                             strValue = "B5";
                         break;
-                    case "Local Seminar":
+                    case "地方研討會":
                             strValue = "LS";
                         break;
                     default:
@@ -503,7 +587,11 @@ namespace NMTSSTransfer
                 log.Fatal(@"Method[getWords]-" +ex.Message, ex);
                 return "";
             }
+        }
 
+        private string getReginNameInString(string addr)
+        {
+            return  Regex.Replace(addr, @"[\u0000-\u007F]", string.Empty).Substring(0,2);
 
         }
 

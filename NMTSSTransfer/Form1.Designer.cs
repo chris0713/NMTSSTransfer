@@ -37,7 +37,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.sl = new System.Windows.Forms.CheckBox();
             this.ls = new System.Windows.Forms.CheckBox();
-            this.dr = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.nd = new System.Windows.Forms.CheckBox();
             this.tls2 = new System.Windows.Forms.CheckBox();
@@ -53,7 +52,7 @@
             this.D2 = new System.Windows.Forms.CheckBox();
             this.D1 = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.WCT101 = new System.Windows.Forms.CheckBox();
             this.WCT = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -73,6 +72,12 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.D3 = new System.Windows.Forms.CheckBox();
+            this.wct201 = new System.Windows.Forms.CheckBox();
+            this.dtp_Start = new System.Windows.Forms.DateTimePicker();
+            this.dtp_End = new System.Windows.Forms.DateTimePicker();
+            this.l_dtStart = new System.Windows.Forms.Label();
+            this.l_dtEnd = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -115,9 +120,9 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(361, 294);
+            this.btnGo.Location = new System.Drawing.Point(326, 294);
             this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(124, 71);
+            this.btnGo.Size = new System.Drawing.Size(220, 71);
             this.btnGo.TabIndex = 6;
             this.btnGo.Text = "Get outlook CVS File from NMTSS";
             this.btnGo.UseVisualStyleBackColor = true;
@@ -127,7 +132,6 @@
             // 
             this.groupBox1.Controls.Add(this.sl);
             this.groupBox1.Controls.Add(this.ls);
-            this.groupBox1.Controls.Add(this.dr);
             this.groupBox1.Location = new System.Drawing.Point(-1, 38);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(142, 212);
@@ -140,7 +144,7 @@
             this.sl.AutoSize = true;
             this.sl.Checked = true;
             this.sl.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.sl.Location = new System.Drawing.Point(11, 65);
+            this.sl.Location = new System.Drawing.Point(11, 43);
             this.sl.Name = "sl";
             this.sl.Size = new System.Drawing.Size(120, 16);
             this.sl.TabIndex = 2;
@@ -152,22 +156,12 @@
             this.ls.AutoSize = true;
             this.ls.Checked = true;
             this.ls.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ls.Location = new System.Drawing.Point(11, 43);
+            this.ls.Location = new System.Drawing.Point(11, 21);
             this.ls.Name = "ls";
             this.ls.Size = new System.Drawing.Size(84, 16);
             this.ls.TabIndex = 1;
             this.ls.Text = "地方研討會";
             this.ls.UseVisualStyleBackColor = true;
-            // 
-            // dr
-            // 
-            this.dr.AutoSize = true;
-            this.dr.Location = new System.Drawing.Point(11, 21);
-            this.dr.Name = "dr";
-            this.dr.Size = new System.Drawing.Size(72, 16);
-            this.dr.TabIndex = 0;
-            this.dr.Text = "區域大會";
-            this.dr.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -270,13 +264,14 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.D3);
             this.groupBox3.Controls.Add(this.AAE);
             this.groupBox3.Controls.Add(this.GTL);
             this.groupBox3.Controls.Add(this.D2);
             this.groupBox3.Controls.Add(this.D1);
             this.groupBox3.Location = new System.Drawing.Point(295, 38);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(194, 144);
+            this.groupBox3.Size = new System.Drawing.Size(286, 130);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "莫蒂膚訓練";
@@ -286,9 +281,9 @@
             this.AAE.AutoSize = true;
             this.AAE.Location = new System.Drawing.Point(12, 84);
             this.AAE.Name = "AAE";
-            this.AAE.Size = new System.Drawing.Size(168, 16);
+            this.AAE.Size = new System.Drawing.Size(262, 16);
             this.AAE.TabIndex = 7;
-            this.AAE.Text = "莫蒂膚彩妝訓練之眼妝教學";
+            this.AAE.Text = "莫蒂膚®實務操作課程-線上派對& Shopbox科技";
             this.AAE.UseVisualStyleBackColor = true;
             // 
             // GTL
@@ -296,9 +291,9 @@
             this.GTL.AutoSize = true;
             this.GTL.Location = new System.Drawing.Point(11, 62);
             this.GTL.Name = "GTL";
-            this.GTL.Size = new System.Drawing.Size(168, 16);
+            this.GTL.Size = new System.Drawing.Size(120, 16);
             this.GTL.TabIndex = 2;
-            this.GTL.Text = "莫蒂膚彩妝訓練之基礎美妝";
+            this.GTL.Text = "莫蒂膚事業說明會";
             this.GTL.UseVisualStyleBackColor = true;
             // 
             // D2
@@ -306,9 +301,9 @@
             this.D2.AutoSize = true;
             this.D2.Location = new System.Drawing.Point(11, 40);
             this.D2.Name = "D2";
-            this.D2.Size = new System.Drawing.Size(180, 16);
+            this.D2.Size = new System.Drawing.Size(108, 16);
             this.D2.TabIndex = 1;
-            this.D2.Text = "莫蒂膚第二級彩妝與技巧訓練";
+            this.D2.Text = "莫蒂膚入門概論";
             this.D2.UseVisualStyleBackColor = true;
             // 
             // D1
@@ -316,31 +311,32 @@
             this.D1.AutoSize = true;
             this.D1.Location = new System.Drawing.Point(11, 21);
             this.D1.Name = "D1";
-            this.D1.Size = new System.Drawing.Size(180, 16);
+            this.D1.Size = new System.Drawing.Size(168, 16);
             this.D1.TabIndex = 0;
-            this.D1.Text = "莫蒂膚第一級化妝及護膚訓練";
+            this.D1.Text = "莫蒂膚產品知識運用與行銷";
             this.D1.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.checkBox12);
+            this.groupBox4.Controls.Add(this.wct201);
+            this.groupBox4.Controls.Add(this.WCT101);
             this.groupBox4.Controls.Add(this.WCT);
-            this.groupBox4.Location = new System.Drawing.Point(295, 188);
+            this.groupBox4.Location = new System.Drawing.Point(295, 177);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(194, 62);
+            this.groupBox4.Size = new System.Drawing.Size(286, 100);
             this.groupBox4.TabIndex = 10;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "網路訓練";
             // 
-            // checkBox12
+            // WCT101
             // 
-            this.checkBox12.AutoSize = true;
-            this.checkBox12.Location = new System.Drawing.Point(12, 84);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Size = new System.Drawing.Size(156, 16);
-            this.checkBox12.TabIndex = 7;
-            this.checkBox12.Text = "莫蒂膚彩妝訓之眼妝教學";
-            this.checkBox12.UseVisualStyleBackColor = true;
+            this.WCT101.AutoSize = true;
+            this.WCT101.Location = new System.Drawing.Point(11, 40);
+            this.WCT101.Name = "WCT101";
+            this.WCT101.Size = new System.Drawing.Size(114, 16);
+            this.WCT101.TabIndex = 7;
+            this.WCT101.Text = "網路中心訓練101";
+            this.WCT101.UseVisualStyleBackColor = true;
             // 
             // WCT
             // 
@@ -591,14 +587,14 @@
             this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 376);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(492, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(588, 22);
             this.statusStrip1.TabIndex = 25;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(104, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(129, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // toolStripProgressBar1
@@ -607,11 +603,72 @@
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             // 
+            // D3
+            // 
+            this.D3.AutoSize = true;
+            this.D3.Location = new System.Drawing.Point(12, 106);
+            this.D3.Name = "D3";
+            this.D3.Size = new System.Drawing.Size(180, 16);
+            this.D3.TabIndex = 8;
+            this.D3.Text = "肌膚保養產品知識運用與行銷";
+            this.D3.UseVisualStyleBackColor = true;
+            // 
+            // wct201
+            // 
+            this.wct201.AutoSize = true;
+            this.wct201.Location = new System.Drawing.Point(11, 59);
+            this.wct201.Name = "wct201";
+            this.wct201.Size = new System.Drawing.Size(114, 16);
+            this.wct201.TabIndex = 8;
+            this.wct201.Text = "網路中心訓練201";
+            this.wct201.UseVisualStyleBackColor = true;
+            // 
+            // dtp_Start
+            // 
+            this.dtp_Start.Location = new System.Drawing.Point(56, 280);
+            this.dtp_Start.Name = "dtp_Start";
+            this.dtp_Start.Size = new System.Drawing.Size(224, 22);
+            this.dtp_Start.TabIndex = 26;
+            this.dtp_Start.ValueChanged += new System.EventHandler(this.dtp_Start_ValueChanged);
+            // 
+            // dtp_End
+            // 
+            this.dtp_End.Location = new System.Drawing.Point(56, 308);
+            this.dtp_End.Name = "dtp_End";
+            this.dtp_End.Size = new System.Drawing.Size(222, 22);
+            this.dtp_End.TabIndex = 27;
+            this.dtp_End.ValueChanged += new System.EventHandler(this.dtp_End_ValueChanged);
+            // 
+            // l_dtStart
+            // 
+            this.l_dtStart.AutoSize = true;
+            this.l_dtStart.Location = new System.Drawing.Point(5, 323);
+            this.l_dtStart.Name = "l_dtStart";
+            this.l_dtStart.Size = new System.Drawing.Size(33, 12);
+            this.l_dtStart.TabIndex = 28;
+            this.l_dtStart.Text = "";
+            this.l_dtStart.Visible = false;
+            
+            // 
+            // l_dtEnd
+            // 
+            this.l_dtEnd.AutoSize = true;
+            this.l_dtEnd.Location = new System.Drawing.Point(5, 335);
+            this.l_dtEnd.Name = "l_dtEnd";
+            this.l_dtEnd.Size = new System.Drawing.Size(33, 12);
+            this.l_dtEnd.TabIndex = 29;
+            this.l_dtEnd.Text = "";
+            this.l_dtEnd.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 398);
+            this.ClientSize = new System.Drawing.Size(588, 398);
+            this.Controls.Add(this.l_dtEnd);
+            this.Controls.Add(this.l_dtStart);
+            this.Controls.Add(this.dtp_End);
+            this.Controls.Add(this.dtp_Start);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtSaveLoc);
@@ -666,7 +723,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox sl;
         private System.Windows.Forms.CheckBox ls;
-        private System.Windows.Forms.CheckBox dr;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox nd;
         private System.Windows.Forms.CheckBox tls2;
@@ -682,7 +738,7 @@
         private System.Windows.Forms.CheckBox D2;
         private System.Windows.Forms.CheckBox D1;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.CheckBox WCT101;
         private System.Windows.Forms.CheckBox WCT;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
@@ -702,7 +758,12 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        
+        private System.Windows.Forms.CheckBox D3;
+        private System.Windows.Forms.CheckBox wct201;
+        private System.Windows.Forms.DateTimePicker dtp_Start;
+        private System.Windows.Forms.DateTimePicker dtp_End;
+        private System.Windows.Forms.Label l_dtStart;
+        private System.Windows.Forms.Label l_dtEnd;
     }
 }
 

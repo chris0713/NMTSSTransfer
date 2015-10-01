@@ -31,7 +31,9 @@ namespace NMTSSTransfer
         public Form1()
         {
             
-            InitializeComponent();
+            InitializeComponent();           
+            l_dtStart.Text = DateTime.Now.ToString("yyyy/MM/dd");
+            l_dtEnd.Text = DateTime.Now.AddMonths(1).ToString("yyyy/MM/dd");
             InitialBackgroundWorker();
             setDefaultValues();
             log4net.Config.XmlConfigurator.Configure();
@@ -196,43 +198,51 @@ namespace NMTSSTransfer
         private void composeCheckItems()
         {
             l_Items = new List<string>();
-            l_Items.Add("hdnSelMtgState=TW");
-            l_Items.Add("selLangCode=2");
-            if (dr.Checked)
-                l_Items.Add("selMtgType=" + dr.Name.ToUpper());
+            l_Items.Add("minSearchDate=0");
+            l_Items.Add("dateMask=yy/mm/dd");
+            l_Items.Add("dateFilter=custom");
             if(ls.Checked)
-                l_Items.Add("selMtgType=" + ls.Name.ToUpper());
-            if(sl.Checked)
-                l_Items.Add("selMtgType=" + sl.Name.ToUpper());
-            if(B5.Checked)
-                l_Items.Add("selMtgType=" + B5.Name.ToUpper());
+                l_Items.Add("meetingTypeID=5"); //地方研討會
+            if (sl.Checked)
+                l_Items.Add("meetingTypeID=6"); //超連鎖事業說明會
+            if (B5.Checked)
+                l_Items.Add("meetingTypeID=7"); //B5
             if(ECCT.Checked)
-                l_Items.Add("selMtgType=" + ECCT.Name.ToUpper());
+                l_Items.Add("meetingTypeID=8"); //ECCT
             if(GPT.Checked)
-                l_Items.Add("selMtgType=" + GPT.Name.ToUpper());
-            if(nd.Checked)
-                l_Items.Add("selMtgType=" + nd.Name.ToUpper());
-            if(to.Checked)
-                l_Items.Add("selMtgType=" + to.Name.ToUpper());
-            if(tsm.Checked)
-                l_Items.Add("selMtgType=" + tsm.Name.ToUpper());
-            if(tls1.Checked)
-                l_Items.Add("selMtgType=" + tls1.Name.ToUpper());
-            if(tls2.Checked)
-                l_Items.Add("selMtgType=" + tls2.Name.ToUpper());
-            if(D1.Checked)
-                l_Items.Add("selMtgType=" + D1.Name.ToUpper());
-            if(D2.Checked)
-                l_Items.Add("selMtgType=" + D2.Name.ToUpper());
-            if(GTL.Checked)
-                l_Items.Add("selMtgType=" + GTL.Name.ToUpper());
-            if(AAE.Checked)
-                l_Items.Add("selMtgType=" + AAE.Name.ToUpper());
-            if(WCT.Checked)
-                l_Items.Add("selMtgType=" + WCT.Name.ToUpper());
-            l_Items.Add("fYear="+fYear.Text +"&fMonth="+fMonth.Text +"&fDay="+fDay.Text);
-            l_Items.Add("tYear=" + tYear.Text + "&tMonth=" + tMonth.Text + "&tDay=" + tDay.Text);
-            l_Items.Add("regionCode="+ regionCode.Text);
+                l_Items.Add("meetingTypeID=9"); //產品訓練
+            if (nd.Checked)
+                l_Items.Add("meetingTypeID=17"); //新超連鎖店主訓練
+            if (to.Checked)
+                l_Items.Add("meetingTypeID=52"); //全新生活入門概論
+            if (tsm.Checked)
+                l_Items.Add("meetingTypeID=19"); //全新生活支援課程
+            if (tls1.Checked)
+                l_Items.Add("meetingTypeID=21"); //全新生活基礎起步訓練
+            if (tls2.Checked)
+                l_Items.Add("meetingTypeID=22");//全新生活進階應用訓練
+            if (D1.Checked)
+                l_Items.Add("meetingTypeID=69");  //莫蒂膚產品知識運用與行銷 
+            if (D2.Checked)
+                l_Items.Add("meetingTypeID=13"); //莫蒂膚入門概論
+            if (GTL.Checked)
+                l_Items.Add("meetingTypeID=12"); //莫蒂膚事業說明會
+            if (AAE.Checked)
+                l_Items.Add("meetingTypeID=80"); //莫蒂膚®實務操作課程-線上派對& Shopbox科技
+            if (D3.Checked)
+                l_Items.Add("meetingTypeID=70");//肌膚保養產品知識運用與行銷
+            if (WCT.Checked)
+                l_Items.Add("meetingTypeID=24"); //網路中心入門概論
+            //l_Items.Add("fYear="+fYear.Text +"&fMonth="+fMonth.Text +"&fDay="+fDay.Text);
+            //l_Items.Add("tYear=" + tYear.Text + "&tMonth=" + tMonth.Text + "&tDay=" + tDay.Text);
+            //l_Items.Add("regionCode="+ regionCode.Text);
+ 
+            l_Items.Add("startDate=" +this.l_dtStart.Text ); //Start Date
+            l_Items.Add("endDate=" + this.l_dtEnd.Text);    // End Date
+            
+            l_Items.Add("state=" + regionCode.Text + "*TWN"); //Region
+            l_Items.Add("language=CMN"); //Language
+
         }
         private void btnGo_Click(object sender, EventArgs e)
         {
@@ -332,6 +342,15 @@ namespace NMTSSTransfer
             Form2 f2 = new Form2();
             f2.Visible = true;
         }
-        
+
+        private void dtp_Start_ValueChanged(object sender, EventArgs e)
+        {
+            this.l_dtStart.Text = dtp_Start.Value.ToString("yyyy/MM/dd");
+        }
+
+        private void dtp_End_ValueChanged(object sender, EventArgs e)
+        {
+            this.l_dtEnd.Text = dtp_End.Value.ToString("yyyy/MM/dd");
+        }
     }
 }
