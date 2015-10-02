@@ -242,6 +242,10 @@ namespace NMTSSTransfer
             
             l_Items.Add("state=" + regionCode.Text + "*TWN"); //Region
             l_Items.Add("language=CMN"); //Language
+            l_Items.Add("sortBy=date_asc");
+            l_Items.Add("pageSize=2000");
+            l_Items.Add("pageNum=1");
+
 
         }
         private void btnGo_Click(object sender, EventArgs e)
